@@ -1,0 +1,209 @@
+import React, { useState } from "react";
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { client } from "../../outils/axios";
+import { useDispatch } from "react-redux";
+import NavTop from "../../Containers/nav/NavTop";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+
+export default function UpdateUser() {
+
+
+    const [userData, setUserData] = useState({})
+    const dispatch = useDispatch()
+    const { id } = useParams()
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmpassword] = useState("");
+    const [type, setType] = useState("");
+    const [groupe, setGroupe] = useState("");
+    useEffect(() => {
+        client.get("/user/" + id).then(res => {
+            setUserData(res.data.data[0])
+            setFirstname(res.data.data[0].firstname)
+            setLastname(res.data.data[0].lastname)
+            setEmail(res.data.data[0].email)
+            setType(res.data.data[0].type)
+            setGroupe(res.data.data[0].groupe)
+
+        })
+    }, [])
+
+    const handleChangeFirstname = (e) => {
+        setFirstname(e.target.value)
+    }
+    const handleChangeLastname = (e) => {
+        setLastname(e.target.value)
+    }
+    const handleChangeEmail = (e) => {
+        setEmail(e.target.value)
+    }
+    const handleChangePassword = (e) => {
+        setPassword(e.target.value)
+    }
+    const handleChangeConfirmpassword = (e) => {
+        setConfirmpassword(e.target.value)
+    }
+    const handleChangeType = (e) => {
+        setType(e.target.value)
+    }
+    const handleChangeGroupe = (e) => {
+        setGroupe(e.target.value)
+    }
+    const handelSubmit=(e)=>{
+e.preventDefault()
+
+const data={firstname,lastname,email,password,type,groupe}
+
+
+client.patch("/user/"+id,data,{
+}).then(res=>console.log(res.data)
+)
+
+    }
+    return (
+
+        <>
+
+
+            <NavTop current={"update page"} />
+            {/*content*/}
+            <div className="m-7 border-0 rounded-lg  relative flex flex-col   outline-none focus:outline-none">
+                {/*header*/}
+                <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
+                    <h3 className="text-3xl font-semibold">
+                        update  user                  </h3>
+
+                </div>
+                {/*body*/}
+                <div className="relative  flex-auto">
+
+                    <form className="p-6 mx-auto" onSubmit={handelSubmit}>
+
+                        <div className="grid md:grid-cols-2 md:gap-6">
+                            <div className="relative z-0 w-full mb-5 group">
+                                <input type="text"
+                                    value={firstname}
+                                    onChange={e => handleChangeFirstname(e)}
+                                    name="firstname" id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                <label for="floating_first_name" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
+
+
+
+                            </div>
+                            <div className="relative z-0 w-full mb-5 group">
+                                <input
+                                    value={lastname}
+                                    onChange={e => handleChangeLastname(e)}
+                                    type="text" name="lastName" id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                <label for="floating_last_name" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
+
+
+
+                            </div>
+
+
+                        </div>
+
+                        <div className="relative z-0 w-full mt-3  mb-5 ">
+                            <input
+                                value={email}
+                                onChange={e => handleChangeEmail(e)}
+                                type="email" name="email" id="floating_email" className=" block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "  />
+
+                            <label for="floating_email" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+
+                        </div>
+                        <div className="relative z-0 w-full mb-5 ">
+                            <input type="password"
+
+                                value={password}
+                                onChange={e => handleChangePassword(e)}
+                                name="password" id="password" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "  />
+
+                            <label for="password" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+
+
+                        </div>
+                        <div className="relative z-0 w-full mb-5 ">
+                            <input type="password"
+
+                                value={confirmpassword}
+                                onChange={e => handleChangeConfirmpassword(e)}
+                                name="confirmpassword" id="confirmpassword" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "  />
+
+                            <label for="confirmpassword" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+
+                        </div>
+                        <div className="grid md:grid-cols-2 md:gap-6">
+
+                            <div className="grid md:grid-cols-2 md:gap-6">
+
+                                <div className="flex flex-col gap-4 w-full mb-5 group">
+                                    <div className="flex items-center">
+                                        <input
+                                            name='type'
+                                            value="student"
+                                            checked={type ==="student"}
+
+                                            onChange={e => handleChangeType(e)}
+                                            type="radio" id="green" className="w-4 h-4 text-green-600 bg-gray-200 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 checked:bg-green-500 checked:border-green-500" />
+                                        <label for="green-radio" className="ml-3 block text-sm font-medium text-gray-700">student</label>
+                                    </div>
+                                    <div className="flex items-center">
+                                        <input type="radio" id="green-radio"
+
+                                            value="teacher"
+                                            checked={type ==="teacher"}
+                                            onChange={e => handleChangeType(e)}
+                                            name='type'
+
+                                            className="w-4 h-4 text-green-600 bg-gray-200 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 checked:bg-green-500 checked:border-green-500" />
+                                        <label for="green-radio" className="ml-3 block text-sm font-medium text-gray-700">Teacher</label>
+                                    </div>
+                                </div>
+
+                              {
+                                type === "student" &&(
+                                    <div className="relative z-0 w-full mb-5 group">
+                                    <input
+
+                                        value={groupe}
+                                        onChange={e => handleChangeGroupe(e)}
+                                        type="text" id="groupe"
+                                        name="groupe"
+                                        className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " />
+                                    <label for="groupe" className="peer-focus:font-medium absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-green-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">groupe</label>
+                                </div>
+                                )
+                              }
+                            </div>
+                        </div>
+
+                        {/*footer*/}
+                        <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                            <button
+                                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button" >  anunler</button>
+                            <button
+                                className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="submit" >
+                                Save changes
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <ToastContainer />
+
+        </>
+
+    );
+}
