@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Home from './pages/Home';
 import DashTable from './Containers/DashTable';
 import Inbox from './Containers/Inbox/Inbox';
 import Users from './Containers/Users/Users';
@@ -9,7 +8,6 @@ import Register from './Component/Auth/Login';
 import GroupeList from './Containers/groupes/GroupeList';
 import NotFound from './pages/NotFound';
 import UserManagement from './Component/UserManagement/UserManagement';
-import StartQuizze from './Containers/Quizzes/StartQuizze';
 import Quizze from './Containers/Quizzes/Quizze';
 import CreateSeaction from './Containers/CreateQuizze/CreateSeaction';
 import Profile from './Containers/Profile/Profile';
@@ -18,8 +16,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SlideBar from './Containers/SlideBar';
 import UploadeExcel from './Component/UserManagement/UploadeExcel';
-import AddQs from './Containers/CreateQuizze/AddQuestion';
-import useUserId from './hooks/useUserId';
+
 import AddQuestion from './Containers/CreateQuizze/AddQuestion';
 import QuizzeMangement from './Component/QuizzeMangement/QuizzeMangement';
 import Navbar from './Containers/Navbar/Navbar';
