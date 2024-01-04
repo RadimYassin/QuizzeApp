@@ -62,7 +62,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($input, [
 
-            'email' => 'regex:/^[\w\._\+-]+@emsi\.ma$/|unique:users,email',
+            'email' => 'regex:/^[\w\._\+-]+@emsi\.ma$/|email',
 
         ]);
 
@@ -71,7 +71,7 @@ class AdminController extends Controller
                 'status' => false,
                 'message' => 'validation error',
                 'errors' => $validator->errors(),
-            ], 401);
+            ], 203);
         }
 
 
@@ -95,7 +95,7 @@ class AdminController extends Controller
 
 
 
-        if ($request->has('password')&& !empty($request->input('password'))) {
+        if ($request->has('password') && !empty($request->input('password'))) {
             $user->password = Hash::make($input['password']);
         }
 

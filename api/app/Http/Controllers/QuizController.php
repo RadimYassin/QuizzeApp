@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 
 class QuizController extends Controller
 {
@@ -30,9 +30,9 @@ class QuizController extends Controller
         $validatedData = Validator::make($request->all(),
             [
                 'title' => 'required|string|max:255',
-                "date"=>"'required'",
-                "time"=>"required",
-                "created_by" => "required"
+                "date" => "'required'",
+                "time" => "required",
+                "created_by" => "required",
             ]);
 
         // if ($validatedData->fails()) {
@@ -43,9 +43,9 @@ class QuizController extends Controller
         //     ], 203);
         // }
         $quiz = new Quiz();
-        $quiz->title =$request->title;
-        $quiz->date =$request->date;
-        $quiz->time =$request->time;
+        $quiz->title = $request->title;
+        $quiz->date = $request->date;
+        $quiz->time = $request->time;
         $quiz->created_by = $request->created_by;
 
         $quiz->save();
@@ -60,9 +60,24 @@ class QuizController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
+        $questions = Question::with('options')
+            ->where('quiz_id', $id)
+            ->get();
 
+        // Extract relevant information for display
+        $data = $questions->map(function ($question) {
+            return [
+                'id' => $question->id,
+                'quiz_id' => $question->quiz_id,
+                'title' => $question->title,
+                'correct_option' => $question->correct_option,
+                'options' => $question->options,
+            ];
+        });
+
+        return response()->json($data, 200);
     }
 
     /**
@@ -91,8 +106,6 @@ class QuizController extends Controller
                 'status' => true,
                 'message' => ' not found ',
             ], 201);}
-
-
 
     }
 

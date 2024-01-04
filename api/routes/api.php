@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\TeacharController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,3 +21,10 @@ Route::post("/login", [AuthController::class, "loginUser"]);
 Route::resource("/user", AdminController::class);
 
  Route::resource("/Quiz", QuizController::class);
+//endpont qestions
+Route::post("/AddQestion", [QuestionController::class,"CreateQuestion" ]);
+Route::delete("/deleteQestion/{id}", [QuestionController::class,"destroy" ]);
+
+
+//quize for teacher
+Route::get('/user/{userId}/quizzes', [TeacharController::class, "getQuizzesForUser"]);

@@ -20,9 +20,9 @@ class AuthController extends Controller
             [
                    "firstname"=>"required",
                    "lastname"=>"required",
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required',
-                'groupe' => '',
+                   'email' => 'required|email|unique:users,email',
+                   'password' => 'required',
+                   'groupe' => '',
 
 
 
