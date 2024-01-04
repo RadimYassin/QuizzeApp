@@ -1,5 +1,4 @@
 import React from 'react'
-import Navbar from './Navbar'
 import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -69,7 +68,6 @@ export default function Login() {
   }
   return (
     <div style={{ backgroundColor: "rgb(237, 241, 247)" }} className='h-auto lg:h-screen'>
-      <Navbar />
 
 
       <div class=" relative   flex items-center  justify-around overflow-hidden lg:my-28">
@@ -100,25 +98,7 @@ export default function Login() {
               <div class=" mx-auto overflow-hidden rounded-[.6rem] w-9/12 py-1 shadow-md bg-white">
                 <div class="flex min-h-full flex-col  px-6 py-12 lg:px-8">
                   <div class="flex   justify-between gap-3 mb-5  sm:w-full sm:max-w-sm">
-
-                    {/* <div class="flex bg-green-100 w-9/12 items-center ps-4 border border-green-200 rounded">
-                      <input id="bordered-radio-1" type="radio" value="" name="bordered-radio" class="accent-green-500 w-6 h-6 border border-green-200 text-green-600 bg-gray-100  focus:ring-green-500  dark:focus:ring-green-600 dark:ring-offset-green-700 focus:ring-2" />
-                      <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-green-900 dark:text-gray-300">Teacher</label>
-                    </div>
-                    <div class="flex bg-green-100 w-9/12 items-center ps-4 border border-green-200 rounded">
-                      <input id="bordered-radio-1" type="radio" value="" name="bordered-radio" class="accent-green-500 w-6 h-6 border border-green-200 text-green-600 bg-gray-100  focus:ring-green-500  dark:focus:ring-green-600 " />
-                      <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-green-900 dark:text-gray-300">Student</label>
-                    </div> */}
-
-
-
-
                   </div>
-
-
-
-
-
 
                   <Formik
                     initialValues={{

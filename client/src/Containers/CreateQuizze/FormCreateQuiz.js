@@ -5,9 +5,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
+import useUserId from "../../hooks/useUserId";
 
 export default function FormCreateQuiz() {
     const [showModal, setShowModal] = useState(false);
+
+    const info=useUserId()
     const dispatch = useDispatch()
     const SignupSchema = Yup.object().shape({
         title: Yup.string()
@@ -24,7 +27,7 @@ export default function FormCreateQuiz() {
         const title=data.title
         const date=data.date
         const time=data.time
-        const id=1
+        const id=info?.id
 
         try {
            await  client.post("/Quiz",{title:title,date:date,time:time,created_by:id}).then(res=>

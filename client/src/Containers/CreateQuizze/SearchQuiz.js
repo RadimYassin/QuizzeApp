@@ -1,14 +1,27 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function SearchQuiz() {
+
+const dispatch = useDispatch()
+const searchQuery = useSelector(state => state.QuizReducer.searchQuery)
+
+  const handleSearchChange = (query) => {
+    dispatch({
+        type: 'SET_SEARCH_QUERY',
+        payload: query,
+    });
+};
+
     return (
         <div>
-
-
 <div class="relative">
   <label for="Search" class="sr-only"> Search </label>
 
   <input
+
+  onChange={(e)=>handleSearchChange(e.target.value)}
+  value={searchQuery}
     type="text"
     id="Search"
     placeholder="Search for..."

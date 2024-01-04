@@ -24,9 +24,8 @@ export default function UserManagement() {
         )
     }, [])
     const users = useSelector(st => st.UserReducer.users)
-    const searchQuery = useSelector((state) => state.UserReducer.searchQuery);
     const existing_users = useSelector((state) => state.UserReducer.existing_users);
-    console.log("yas",existing_users);
+    const searchQuery = useSelector((state) => state.UserReducer.searchQuery);
 
 
     const filteredUsers = users.filter((user) =>
@@ -105,7 +104,7 @@ export default function UserManagement() {
             <div class="relative m-2 lg:mx-10 flex flex-col  mb-4 lg:mb-0 break-words bg-gray-50   shadow-lg rounded">
                 <div class="rounded-t mb-0 px-0 border-0">
                     <div class="flex flex-wrap items-center px-4 py-2">
-                        <Search handelclose={handelclose} searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+                        <Search handelclose={handelclose}  onSearchChange={handleSearchChange} />
                     </div>
                     <div class="block overflow-x-auto shadow-md sm:rounded-lg">
 

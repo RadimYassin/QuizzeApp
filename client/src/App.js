@@ -17,9 +17,14 @@ import UpdateUser from './Component/UserManagement/UpdateUser';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import SlideBar from './Containers/SlideBar';
-import Navbar from './Component/Auth/Navbar';
 import UploadeExcel from './Component/UserManagement/UploadeExcel';
-import AddQs from './Containers/CreateQuizze/AddQs';
+import AddQs from './Containers/CreateQuizze/AddQuestion';
+import useUserId from './hooks/useUserId';
+import AddQuestion from './Containers/CreateQuizze/AddQuestion';
+import QuizzeMangement from './Component/QuizzeMangement/QuizzeMangement';
+import Navbar from './Containers/Navbar/Navbar';
+// import SlideBar from './Containers/slideBar/SlideBar';
+// import Navbar from './Containers/slideBar/Navbar';
 
 
 
@@ -30,13 +35,11 @@ import AddQs from './Containers/CreateQuizze/AddQs';
 
 export default function App() {
 
-  const user=useSelector(st=>st.AuthReducer.user)
+  const user = useSelector(st => st.AuthReducer.user)
 
-  console.log("user :",user);
   const dispatch = useDispatch()
   useEffect(() => {
     const user = localStorage.getItem("userInfo")
-
 
 
     if (user) {
@@ -50,26 +53,28 @@ export default function App() {
         <div className="min-h-screen flex">
 
           <nav className=" flex-none shadow-md">
-           { <SlideBar />}
+            {
+              user && <SlideBar />
+            }
 
           </nav>
 
-          <main style={{ backgroundColor: "rgb(237, 241, 247)" }} className="flex-1 min-w-0 overflow-auto ...">
+          <main style={{ backgroundColor: "rgb(237, 241, 247)" }} className="flex-1 min-w-0 overflow-auto ">
 
             <Routes>
 
               <Route path="/login" index element={<Register />} />
-              <Route path="/" index element={ 
-                
-                <DashTable /> }
-                 />
-              <Route path="/Groupe/:id" element={<GroupeList /> } />
+              <Route path="/" index element={
+
+                <DashTable />}
+              />
+              <Route path="/Groupe/:id" element={<GroupeList />} />
               <Route path="/profile" element={<Profile />} />
 
-              <Route path="/inbox" element={<Inbox />}  />
+              <Route path="/inbox" element={<Inbox />} />
               <Route path="/Students" element={<Users />} />
-              <Route path="/createQuizze" element={<CreateSeaction />}  />
-              <Route path="/addQs/:id" element={<AddQs />} />
+              <Route path="/createQuizze" element={<CreateSeaction />} />
+              <Route path="/addQs/:id" element={<AddQuestion />} />
 
 
               {/**students dash */}
@@ -78,8 +83,12 @@ export default function App() {
               <Route path="/Qz/:id" element={<Quizze />} />
 
 
-              {/**admin dash */}
-              <Route path="/adduser" element={<UserManagement />}  />
+              {/* *admin dash*/}
+
+              <Route path="/adduser" element={<UserManagement />} />
+              <Route path="/QuizzeManagement" element={<QuizzeMangement />} />
+
+
               <Route path="/update/:id" element={<UpdateUser />} />
               <Route path="/upload" element={<UploadeExcel />} />
 
@@ -90,8 +99,6 @@ export default function App() {
         </div>
 
       </>
-
-
 
 
 

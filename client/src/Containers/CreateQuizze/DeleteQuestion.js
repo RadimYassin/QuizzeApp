@@ -3,19 +3,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
-import { AiOutlineDelete } from "react-icons/ai";
+import { MdFolderDelete } from "react-icons/md";
 import { CiWarning } from "react-icons/ci";
 
-export default function DeleteQs({ id }) {
+export default function DeleteQuestion({ id }) {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch()
 
 
   const handelDelete = (params) => {
 
-    dispatch({ type: "DELETE_Qs", payload: params })
+    dispatch({ type: "DELETE_deleteQestion", payload: params })
 
-    client.delete("/Quiz/" + params).then(res => console.log(res.data))
+    client.delete("/deleteQestion/" + params).then(res => console.log(res.data))
 setShowModal(false)
   }
 
@@ -27,11 +27,7 @@ setShowModal(false)
 
   return (
     <>
-
-
-      <AiOutlineDelete onClick={() => setShowModal(true)}
-        class="w-7 h-7 text-red-600 " />
-
+            <MdFolderDelete onClick={() => setShowModal(true)} className='w-10 h-10 text-red-500 hover:text-red-700'/>
 
       {showModal ? (
         <>
@@ -44,7 +40,7 @@ setShowModal(false)
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    delete Qs                  </h3>
+                    delete   Question             </h3>
                   <button
                     className="p-1 ml-auto  border-0 text-black  float-right text-3xl leading-none font-semibold "
                     onClick={() => setShowModal(false)}

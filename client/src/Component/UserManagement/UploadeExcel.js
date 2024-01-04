@@ -30,8 +30,7 @@ if (response.data.status===true) {
 
 }
 nav("/adduser")
-// console.log(response.data[0]?.Existing_users);
-// console.log(response.data[1]?.imported_users);
+
 
 
 

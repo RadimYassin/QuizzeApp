@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function NavTop({current}) {
     return (
-        <nav class="flex p-7 mt-5 " aria-label="Breadcrumb">
+        <nav class="flex p-7  " aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
                         <Link to="/" class="inline-flex items-center text-lg font-medium text-gray-800 hover:text-blue-600">

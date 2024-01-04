@@ -5,6 +5,7 @@ export default function EndQuizze() {
 
     return (
         <div>
-{score}        </div>
+{score}      
+  </div>
     )
 }

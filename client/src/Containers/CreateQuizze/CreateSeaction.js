@@ -1,28 +1,50 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavTop from '../nav/NavTop'
-import { MdOutlineSendTimeExtension } from "react-icons/md";
 import { LiaEditSolid } from "react-icons/lia";
-import { AiOutlineDelete } from "react-icons/ai";
 import SearchQuiz from './SearchQuiz';
 import { CgFolderAdd } from "react-icons/cg";
 import { Link } from 'react-router-dom';
 import FormCreateQuiz from './FormCreateQuiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { client } from '../../outils/axios';
-import DeleteQs from './DeleteQs';
+import useUserId from '../../hooks/useUserId';
+import DeleteQuizze from './DeleteQuizze';
 function CreateSeaction() {
 
-const state = useSelector(state => state.QuizReducer.quizzes)
-console.log("data",state);
-
+    const state = useSelector(state => state.QuizReducer.quizzes)
+    const searchQuery = useSelector(state => state.QuizReducer.searchQuery)
     const dispatch = useDispatch()
 
 
+    const info = useUserId()
+
+
+
+    const filteredUsers = state.filter((q) =>
+        q.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+
+
+    const fetchdata = (id) => {
+        if (id != null) {
+            client.get(`/user/${id}/quizzes`).then(res => dispatch({ type: "Fetch_quizzes", payload: res.data.quizzes })
+
+            )
+
+        }
+
+    }
+
+
+
+
+
     useEffect(() => {
-      client.get("/Quiz").then(res=>
-        
-        dispatch({type:"Fetch_quizzes",payload:res.data.Quizs}))
-    }, [])
+
+
+        fetchdata(info?.id)
+    }, [info?.id])
     return (
         <div className=''>
 
@@ -41,62 +63,74 @@ console.log("data",state);
                             <h3 class="text-2xl text-green-600 font-bold  ">Quizess</h3>
                         </div>
                         <div class="">
-                            <SearchQuiz />
+                            {
+                                filteredUsers.length > 0 ? <SearchQuiz /> : < p class="text-gray-500">No quizzes yet,Let's write a new Quiz! 🎉 </p>
+                            }
                         </div>
                     </div>
-                    <div class="block overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                            <thead>
-                                <tr>
-                                    <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">title</th>
-                                    <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">date</th>
-                                    <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">time</th>
-                                    <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">action</th>
-
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    state.map(item => (
-                                        <tr key={item.id} class="" >
-                                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4 text-left">{item.title}</td>
 
 
-                                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.date}</td>
-                                            <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.time}min</td>
-
-                                            <td class=" border-t-0 px-4 w-1/5 border-l-0 border-r-0 text-sm  p-4">
-                                                <div class="groupe">
-
-                                                    <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                        <LiaEditSolid class="w-7 h-7 text-blue-600 " />
-
-                                                    </button>
-                                                    <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                         <DeleteQs id={item.id}/>
-                                                    </button>
-                                                    <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                        <Link to={"/addQs/1"}>
-
-                                                            <CgFolderAdd class="w-7 h-7 text-green-600 " />
-
-                                                        </Link>
-
-                                                    </button>
+                    {
+                        filteredUsers.length > 0 &&
 
 
-                                                </div>
-                                            </td>
+                        <div class="block overflow-x-auto shadow-md sm:rounded-lg">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">title</th>
+                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">date</th>
+                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">time</th>
+                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">action</th>
 
-                                        </tr>
-                                    ))
-                                }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        filteredUsers.map(item => (
+                                            <tr key={item.id} class="" >
+                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4 text-left">{item.title}</td>
+
+
+                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.date}</td>
+                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.time}min</td>
+
+                                                <td class=" border-t-0 px-4 w-1/5 border-l-0 border-r-0 text-sm  p-4">
+                                                    <div class="groupe">
+
+                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                            <LiaEditSolid class="w-7 h-7 text-blue-600 " />
+
+                                                        </button>
+                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                            <DeleteQuizze id={item.id} />
+                                                        </button>
+                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                            <Link to={"/addQs/" + item.id}>
+
+                                                                <CgFolderAdd class="w-7 h-7 text-green-600 " />
+
+                                                            </Link>
+
+                                                        </button>
+
+
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        ))
+                                    }
 
 
 
-                            </tbody>
-                        </table>
-                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                    }
                 </div>
             </div>
         </div>

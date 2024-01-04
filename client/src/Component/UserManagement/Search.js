@@ -3,7 +3,7 @@ import { SiMicrosoftexcel } from "react-icons/si";
 import { client } from '../../outils/axios';
 import { saveAs } from 'file-saver';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddUser from './AddUser';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,7 +14,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
-export default function Search({ searchQuery, onSearchChange,handelclose }) {
+export default function Search({ onSearchChange,handelclose }) {
+    const searchQuery = useSelector((state) => state.UserReducer.searchQuery);
+
 
     const nav = useNavigate()
 

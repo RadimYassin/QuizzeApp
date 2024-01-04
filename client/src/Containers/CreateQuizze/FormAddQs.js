@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 export default function FormAddQs() {
     const [showModal, setShowModal] = useState(false);
     const dispatch = useDispatch()
@@ -12,32 +13,53 @@ export default function FormAddQs() {
         title: Yup.string()
             .required('Required'),
         correct_option: Yup.string()
-            
+
             .required('Required'),
         optionA: Yup.string()
-        
+
             .required('Required'),
         optionB: Yup.string()
-            
+
             .required('Required'),
         optionC: Yup.string()
             .required('Required'),
-    
+
         optionD: Yup.string().required("Required"),
 
     });
-    //   "firstname"=>"required",
-    //   "lastname"=>"required",
-    // 'email' => 'required|email|unique:users,email',
-    // 'password' => 'required'
-
-    const handleSubmmit = (data) => {
-    
-
-    console.log(data);
-    
+    const { id } = useParams()
 
 
+    const handleSubmmit = async (data) => {
+        // errors
+        // : 
+        // correct_option
+        // : 
+        // ['The correct option field is required.']
+        // optionA
+        // : 
+        // ['The option a field is required.']
+        // optionB
+        // : 
+        // ['The option b field is required.']
+        // optionC
+        // : 
+        // ['The option c field is required.']
+        // optionD
+        // : 
+        // ['The option d field is required.']
+        // quiz_id
+        // : 
+        // ['The quiz id field is required.']
+        // title
+        // : 
+        // ['The title field is required.']
+        // [[Prototype]
+
+
+
+        console.log(data);
+        await client.post("/AddQestion", { quiz_id:id, title: data.title, correct_option: data.correct_option, optionA: data.optionA, optionB: data.optionB, optionC: data.optionC, optionD: data.optionD }).then(res => console.log(res.data))
     };
     return (
         <>
@@ -49,7 +71,7 @@ export default function FormAddQs() {
                 <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
 
                 Add  Question
-    </button>
+            </button>
             {showModal ? (
                 <>
                     <div
@@ -62,7 +84,7 @@ export default function FormAddQs() {
                                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                                     <h3 className="text-3xl font-semibold">
                                         New Question
-                                                          </h3>
+                                    </h3>
                                     <button
                                         className="p-1 ml-auto  border-0 text-black  float-right text-3xl leading-none font-semibold "
                                         onClick={() => setShowModal(false)}
@@ -84,7 +106,7 @@ export default function FormAddQs() {
                                             optionB: '',
                                             optionC: '',
                                             optionD: '',
-                                        
+
 
                                         }}
                                         validationSchema={SignupSchema}
@@ -99,10 +121,10 @@ export default function FormAddQs() {
 
 
                                                 <div className="relative z-0 w-full mt-3  mb-5 ">
-                                                    <Field 
-                                                    onChange={handleChange}
-                                                    type="text" 
-                                                    name="title" id="title" className=" block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                                    <Field
+                                                        onChange={handleChange}
+                                                        type="text"
+                                                        name="title" id="title" className=" block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
 
                                                     <label htmlFor="title" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Entre Question</label>
                                                     {errors.title && touched.title ? (
@@ -112,22 +134,38 @@ export default function FormAddQs() {
                                                 </div>
                                                 <div className="relative z-0 w-full mb-5 ">
                                                     <Field
-                                                                                                        onChange={handleChange}
+                                                        onChange={handleChange}
 
-                                                     type="text" name="correct_option" id="correct_option" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                                        type="text" 
+                                                        as="select" 
+
+                                                        name="correct_option" id="correct_option" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" "
+
+                                                        required >
+                                                      <option value="" disabled>select option</option>
+
+                                                        <option value="optionA">optionA</option>
+                                                        <option value="optionB">optionB</option>
+                                                        <option value="optionC">optionC</option>
+                                                        <option value="optionD">optionD</option>
+
+                                                    </Field>
 
                                                     <label htmlFor="correct_option" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Creecte Option</label>
                                                     {errors.correct_option && touched.correct_option ? (
                                                         <div className='mt-1 text-red-500'>{errors.correct_option}</div>
                                                     ) : null}
-
                                                 </div>
+
+                                               
+
+
                                                 <span className="text-gray-600 ">Entre option of Question :</span>
                                                 <div className="relative z-0 w-full mt-3 mb-5 ">
                                                     <Field
-                                                                                                        onChange={handleChange}
+                                                        onChange={handleChange}
 
-                                                     type="text" name="optionA" id="optionA" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                                        type="text" name="optionA" id="optionA" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
 
                                                     <label htmlFor="optionA" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">OptionA</label>
                                                     {errors.optionA && touched.optionA ? (
@@ -136,10 +174,10 @@ export default function FormAddQs() {
 
                                                 </div>
                                                 <div className="relative z-0 w-full mt-3 mb-5 ">
-                                                    <Field 
-                                                                                                        onChange={handleChange}
+                                                    <Field
+                                                        onChange={handleChange}
 
-                                                    type="text" name="optionB" id="optionB" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                                        type="text" name="optionB" id="optionB" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
 
                                                     <label htmlFor="optionB" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">OptionB</label>
                                                     {errors.optionB && touched.optionB ? (
@@ -148,10 +186,10 @@ export default function FormAddQs() {
 
                                                 </div>
                                                 <div className="relative z-0 w-full mt-3 mb-5 ">
-                                                    <Field 
-                                                                                                        onChange={handleChange}
+                                                    <Field
+                                                        onChange={handleChange}
 
-                                                    type="text" name="optionC" id="optionC" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+                                                        type="text" name="optionC" id="optionC" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
 
                                                     <label htmlFor="optionC" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">OptionC</label>
                                                     {errors.optionC && touched.optionC ? (
@@ -160,11 +198,11 @@ export default function FormAddQs() {
 
                                                 </div>
                                                 <div className="relative z-0 w-full mt-3 mb-5 ">
-                                                    <Field 
-                                                                                                        onChange={handleChange}
+                                                    <Field
+                                                        onChange={handleChange}
 
-                                                    
-                                                    type="text" name="optionD" id="optionD" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
+
+                                                        type="text" name="optionD" id="optionD" className="block py-2.5 px-0 w-full text-sm text-green-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none   focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder=" " required />
 
                                                     <label htmlFor="optionD" className="peer-focus:font-medium absolute text-sm text-green-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">OptionD</label>
                                                     {errors.optionD && touched.optionD ? (
@@ -193,7 +231,6 @@ export default function FormAddQs() {
                     </div>
 
                     <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-                    <ToastContainer />
 
                 </>
             ) : null}

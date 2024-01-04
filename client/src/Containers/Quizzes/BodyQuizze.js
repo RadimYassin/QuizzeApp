@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { data } from './Data'
 import { useDispatch, useSelector } from 'react-redux'
 import "./style.css"
+import RadioButton from './RadioButton'
+import { date } from 'yup'
 
 export default function BodyQuizze() {
     const score = useSelector(state => state.GameReducer.score)
@@ -13,7 +15,7 @@ export default function BodyQuizze() {
 
     const handleChange = (event) => {
         setOptionChosen(event.target.value);
-      };
+    };
     const dispatch = useDispatch()
 
 
@@ -40,7 +42,7 @@ export default function BodyQuizze() {
     }
 
 
-    const Previous=()=>{
+    const Previous = () => {
         if (data[curentQ].Answer == optionChosen) {
             dispatch({ type: "Previous" })
 
@@ -66,76 +68,117 @@ export default function BodyQuizze() {
             <div className='mt-3  flex flex-col gap-5'>
 
 
+                {/* <RadioButton value="A"
+                    onChange={handleChange}
+                />
+                <RadioButton
+                    value="B"
+
+                    onChange={handleChange}
+                />
+                <RadioButton
+                    value="C"
+                    onChange={handleChange}
+                />
+                <RadioButton
+                    value="D"
+                    onChange={handleChange}
+                /> */}
+
+{
+    data[curentQ].options.map(item => 
+        {
 
 
+            return (
+                <RadioButton optionChosen={optionChosen} key={item.title} handleChange={handleChange} item={item}/>
+            //     <div key={item.num} class="flex  items-center ps-4 border border-green-200 rounded">
+            //     <input
+
+            //         id={item.title}
+            //         type="radio"
+            //         value={item.title}
+            //         name="bordered-radio"
+            //         class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
+            //         checked={optionChosen === item.title}
+            //         onChange={handleChange}
+
+            //     />
+            //     <label style={{ width: "100%" }} htmlFor={item.title} class=" py-4 ms-2 text-sm font-medium text-green-900 ">{item.Option}</label>
+            // </div>
+
+            )
+        }
+    
+    
+    
+    )
+}
+
+                {/* 
                 <div class="flex  items-center ps-4 border border-green-200 rounded">
-                    <input 
-                    
-                    id="A" 
-                    type="radio" 
-                    value="A"
-                     name="bordered-radio" 
-                     class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
-                     checked={optionChosen === "A"}
-                     onChange={handleChange}
-                     
-                     />
+                    <input
+
+                        id="A"
+                        type="radio"
+                        value="A"
+                        name="bordered-radio"
+                        class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
+                        checked={optionChosen === "A"}
+                        onChange={handleChange}
+
+                    />
                     <label style={{ width: "100%" }} htmlFor="A" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionA}</label>
                 </div>
 
 
                 <div class="flex  items-center ps-4 border border-green-200 rounded">
-                    <input 
-                    
-                    id="B" 
-                    type="radio"
-                      value="B"
-                    name="bordered-radio" 
-                    class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
-                    checked={optionChosen === "B"}
-                    onChange={handleChange}
-                  
-                     />
-                    <label style={{ width: "100%" }}  htmlFor="B" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionB}</label>
+                    <input
+
+                        id="B"
+                        type="radio"
+                        value="B"
+                        name="bordered-radio"
+                        class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
+                        checked={optionChosen === "B"}
+                        onChange={handleChange}
+
+                    />
+                    <label style={{ width: "100%" }} htmlFor="B" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionB}</label>
                 </div>
 
 
                 <div class="flex  items-center ps-4 border border-green-200 rounded">
-                    <input 
-                    
-                    id="C" 
-                    type="radio"
-                    value="C"
-                    name="bordered-radio" 
-                    class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
-                    checked={optionChosen === "C"}
-                    onChange={handleChange}
-                     
-                     />
+                    <input
+
+                        id="C"
+                        type="radio"
+                        value="C"
+                        name="bordered-radio"
+                        class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
+                        checked={optionChosen === "C"}
+                        onChange={handleChange}
+
+                    />
                     <label style={{ width: "100%" }} htmlFor="C" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionC}</label>
                 </div>
 
-              
+
 
                 <div class="flex  items-center ps-4 border border-green-200 rounded">
-                    <input 
-                    
-                    id="D" 
-                    type="radio" 
-                    value="D"
-                    name="bordered-radio" 
-                    class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
-                    checked={optionChosen === "D"}
-                    onChange={handleChange}
-                     />
-                    <label style={{ width: "100%" }} htmlFor="D" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionD}</label>
-                </div>
+                    <input
 
-                {/* <button onClick={() => setOptionChosen("A")} className='p-2 hover:bg-green-200 text-start text-blue-700 bg-white border border-gray-200 rounded-s-lg  '>{data[curentQ]?.OptionA} </button>
-                <button onClick={() => setOptionChosen("B")} className='p-2 hover:bg-green-200 text-start text-blue-700 bg-white border border-gray-200 rounded-s-lg ' >{data[curentQ]?.OptionB} </button>
-                <button onClick={() => setOptionChosen("C")} className='p-2 hover:bg-green-200 text-start text-blue-700 bg-white border border-gray-200 rounded-s-lg ' >{data[curentQ]?.OptionC} </button>
-                <button onClick={() => setOptionChosen("D")} className='p-2  hover:bg-green-200 text-start text-blue-700 bg-white border border-gray-200 rounded-s-lg '>{data[curentQ]?.OptionD} </button>
- */}
+                        id="D"
+                        type="radio"
+                        value="D"
+                        name="bordered-radio"
+                        class=" w-6 h-6 border-green-200 text-green-600 bg-gray-100  "
+                        checked={optionChosen === "D"}
+                        onChange={handleChange}
+                    />
+                    <label style={{ width: "100%" }} htmlFor="D" class=" py-4 ms-2 text-sm font-medium text-green-900 ">{data[curentQ]?.OptionD}</label>
+                </div> */}
+
 
 
 
@@ -146,9 +189,9 @@ export default function BodyQuizze() {
             <div className='flex justify-between mt-2 '>
 
 
-                <button disabled={curentQ >0 ? false:true} onClick={() => Previous()} className='text-start hover:text-red-800 disabled:text-gray-400 text-green-900 p-2 w-1/5'>Previous</button>
+                <button disabled={curentQ > 0 ? false : true} onClick={() => Previous()} className='text-start hover:text-red-800 disabled:text-gray-400 text-green-900 p-2 w-1/5'>Previous</button>
 
-                
+
 
 
                 {
