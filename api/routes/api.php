@@ -12,7 +12,6 @@ Route::get("/export", [\App\Http\Controllers\ExportAndImportController::class, "
 Route::post("/import", [\App\Http\Controllers\ExportAndImportController::class, "import"]);
 
 Route::post("/createUser", [AuthController::class, "createUser"]);
-
 Route::post("/login", [AuthController::class, "loginUser"]);
 
 //Quize ENDPOINTS
