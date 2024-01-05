@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
-import NavTop from "../../Containers/nav/NavTop";
+import NavTop from "../nav/NavTop"
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 

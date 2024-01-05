@@ -1,33 +1,35 @@
-import React, { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import DashTable from './Containers/DashTable';
-import Inbox from './Containers/Inbox/Inbox';
-import Users from './Containers/Users/Users';
-import Quizzes from './Containers/Quizzes/Quizzes';
-import Register from './Component/Auth/Login';
-import GroupeList from './Containers/groupes/GroupeList';
-import NotFound from './pages/NotFound';
-import UserManagement from './Component/UserManagement/UserManagement';
-import Quizze from './Containers/Quizzes/Quizze';
-import CreateSeaction from './Containers/CreateQuizze/CreateSeaction';
-import Profile from './Containers/Profile/Profile';
-import UpdateUser from './Component/UserManagement/UpdateUser';
 import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import DashTable from './Components/DashTable';
+import Inbox from './Components/Inbox/Inbox';
+import Users from './Components/Users/Users';
+import Quizzes from './Components/Quizzes/Quizzes';
+// import Register from './Component/Auth/Login';
+import GroupeList from './Components/groupes/GroupeList';
+import NotFound from './pages/NotFound';
+// import UserManagement from './Component/UserManagement/UserManagement';
+// import Quizze from './Containers/Quizzes/Quizze';
+// import CreateSeaction from './Containers/CreateQuizze/CreateSeaction';
+// import Profile from './Containers/Profile/Profile';
+import UpdateUser from './Components/UserManagement/UpdateUser';
 import { useDispatch, useSelector } from 'react-redux';
-import SlideBar from './Containers/SlideBar';
-import UploadeExcel from './Component/UserManagement/UploadeExcel';
-
-import AddQuestion from './Containers/CreateQuizze/AddQuestion';
-import QuizzeMangement from './Component/QuizzeMangement/QuizzeMangement';
-import Navbar from './Containers/Navbar/Navbar';
+// import SlideBar from './Containers/SlideBar';
+// import UploadeExcel from './Component/UserManagement/UploadeExcel';
+// import AddQuestion from './Containers/CreateQuizze/AddQuestion';
+// import QuizzeMangement from './Component/QuizzeMangement/QuizzeMangement';
+// import Navbar from './Containers/Navbar/Navbar';
 // import SlideBar from './Containers/slideBar/SlideBar';
 // import Navbar from './Containers/slideBar/Navbar';
-
-
-
-
-
-
+import Login from './Components/Auth/Login';
+import UserManagement from './Components/UserManagement/UserManagement';
+import Quizze from './Components/Quizzes/Quizze';
+import CreateSeaction from './Components/CreateQuizze/CreateSeaction';
+import Profile from './Components/Profile/Profile';
+ import SlideBar from './Components/SlideBar';
+import UploadeExcel from './Components/UserManagement/UploadeExcel';
+import AddQuestion from './Components/CreateQuizze/AddQuestion';
+import QuizzeMangement from './Components/QuizzeMangement/QuizzeMangement';
+import Navbar from './Components/Navbar/Navbar';
 
 
 export default function App() {
@@ -46,7 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <>
-        <Navbar />
+        <Navbar/>
         <div className="min-h-screen flex">
 
           <nav className=" flex-none shadow-md">
@@ -60,7 +62,7 @@ export default function App() {
 
             <Routes>
 
-              <Route path="/login" index element={<Register />} />
+              <Route path="/login" index element={<Login />} />
               <Route path="/" index element={
 
                 <DashTable />}

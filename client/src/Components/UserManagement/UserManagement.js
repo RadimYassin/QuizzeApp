@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import NavTop from '../../Containers/nav/NavTop'
+import NavTop from '../nav/NavTop'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { TbUserEdit } from "react-icons/tb";
 import Search from './Search';
 import { MdOutlineSendTimeExtension } from "react-icons/md";
 import { useEffect } from 'react';

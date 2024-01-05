@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export default function FormAddQs() {
     const [showModal, setShowModal] = useState(false);
     const dispatch = useDispatch()
@@ -28,38 +28,16 @@ export default function FormAddQs() {
 
     });
     const { id } = useParams()
-
+const Navigate=useNavigate()
 
     const handleSubmmit = async (data) => {
-        // errors
-        // : 
-        // correct_option
-        // : 
-        // ['The correct option field is required.']
-        // optionA
-        // : 
-        // ['The option a field is required.']
-        // optionB
-        // : 
-        // ['The option b field is required.']
-        // optionC
-        // : 
-        // ['The option c field is required.']
-        // optionD
-        // : 
-        // ['The option d field is required.']
-        // quiz_id
-        // : 
-        // ['The quiz id field is required.']
-        // title
-        // : 
-        // ['The title field is required.']
-        // [[Prototype]
+  
 
-
-
-        console.log(data);
         await client.post("/AddQestion", { quiz_id:id, title: data.title, correct_option: data.correct_option, optionA: data.optionA, optionB: data.optionB, optionC: data.optionC, optionD: data.optionD }).then(res => console.log(res.data))
+        
+        setShowModal(false)
+        Navigate("createQuizze")
+    
     };
     return (
         <>

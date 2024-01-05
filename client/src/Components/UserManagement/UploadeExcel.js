@@ -1,5 +1,5 @@
 import React from 'react'
-import NavTop from '../../Containers/nav/NavTop'
+import NavTop from '../nav/NavTop'
 import { useDispatch } from 'react-redux';
 import { client } from '../../outils/axios';
 import { useNavigate } from 'react-router-dom';

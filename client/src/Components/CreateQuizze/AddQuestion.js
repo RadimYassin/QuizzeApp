@@ -23,7 +23,7 @@ export default function AddQuestion() {
             client.get("/Quiz/" +idQ).then(res =>
                 dispatch({ type: 'FETCH_DATA_SUCCESS', payload: res.data })
 
-
+              
 
             )
 
