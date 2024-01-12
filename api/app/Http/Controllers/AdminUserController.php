@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class AdminUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,18 +22,6 @@ class AdminController extends Controller
             'users' => $users,
         ], 200);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(User $user)
     {
         $data = User::find($user);
@@ -62,7 +50,7 @@ class AdminController extends Controller
 
         $validator = Validator::make($input, [
 
-            'email' => 'regex:/^[\w\._\+-]+@emsi\.ma$/|email',
+            'email' => 'regex:/^[\w\._\+-]+@emsi-edu\.ma$/|email',
 
         ]);
 

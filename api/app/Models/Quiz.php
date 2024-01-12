@@ -13,7 +13,8 @@ class Quiz extends Model
     protected $fillable = [
 "title",
 "date",
-"time"
+"time",
+"status"
     ];
 
 
@@ -21,5 +22,8 @@ class Quiz extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-
+    public function questions()
+    {
+        return $this->hasMany(Question::class,"quiz_id");
+    }
 }

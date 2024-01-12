@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('date');
             $table->string('time');
 
-
+            $table->boolean('status')->default(false);
             $table->foreignId('created_by')->constrained('users');
             $table->timestamps();
         });

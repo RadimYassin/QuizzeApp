@@ -24,9 +24,7 @@ class QuizController extends Controller
      */
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'title' => 'required|string|max:255',
-        // ]);
+
         $validatedData = Validator::make($request->all(),
             [
                 'title' => 'required|string|max:255',
@@ -47,6 +45,7 @@ class QuizController extends Controller
         $quiz->date = $request->date;
         $quiz->time = $request->time;
         $quiz->created_by = $request->created_by;
+        $quiz->status =false;
 
         $quiz->save();
 
@@ -66,18 +65,48 @@ class QuizController extends Controller
             ->where('quiz_id', $id)
             ->get();
 
-        // Extract relevant information for display
+        // // Extract relevant information for display
+        // $data = $questions->map(function ($question) {
+        //     return [
+        //         'id' => $question->id,
+        //         'time' => (int)$question->quiz->time,
+        //         'title' => $question->title,
+        //         'correct_option' => $question->correct_option,
+        //         'options' => $question->options,
+        //     ];
+        // });
+
+        // return response()->json($data, 200);
+
         $data = $questions->map(function ($question) {
+            // Extract options information and return as objects
+            $options = $question->options->map(function ($option) {
+                return [
+                    'id' => $option->id,
+                    'question_id' => $option->question_id,
+                    'optionA' => $option->optionA,
+                    'optionB' => $option->optionB,
+                    'optionC' => $option->optionC,
+                    'optionD' => $option->optionD,
+                    'created_at' => $option->created_at,
+                    'updated_at' => $option->updated_at,
+                ];
+            });
+
             return [
                 'id' => $question->id,
-                'quiz_id' => $question->quiz_id,
+                'time' => (int)$question->quiz->time,
                 'title' => $question->title,
                 'correct_option' => $question->correct_option,
-                'options' => $question->options,
+                'options' => $options,
             ];
         });
 
-        return response()->json($data, 200);
+        // Convert the result to an array
+        $result = $data->toArray();
+
+        // Return the result
+        return response()->json($result);
     }
 
     /**
