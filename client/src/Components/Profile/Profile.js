@@ -2,25 +2,19 @@ import { PaperClipIcon } from '@heroicons/react/20/solid'
 import NavTop from "../nav/NavTop"
 import { useEffect, useState } from 'react'
 import { client } from '../../outils/axios'
+import { useSelector } from 'react-redux'
 export default function Profile() {
 const [info ,setInfo]=useState({})
 
 
+const user = useSelector(st => st.AuthReducer.user)
 
 
 useEffect(()=>{
 
-client.get("/user/3").then(res=>setInfo(res.data.data[0]))
+client.get("/user/"+user?.id).then(res=>setInfo(res.data.data[0]))
 
-},[])
-
-
-
-
-
-
-
-
+},[user.id])
   return (
     <>
     <NavTop current={"Profile"}/>

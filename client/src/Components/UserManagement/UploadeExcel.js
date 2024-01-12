@@ -5,8 +5,8 @@ import { client } from '../../outils/axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function UploadeExcel() {
-const dispatch = useDispatch()
-const nav=useNavigate()
+    const dispatch = useDispatch()
+    const nav = useNavigate()
 
     const handleFileUpload = (event) => {
         // get the selected file from the input
@@ -24,17 +24,17 @@ const nav=useNavigate()
             })
             .then((response) => {
 
-if (response.data.status===true) {
-    dispatch({ type: "IMPORT_USER", payload: response.data[1]?.imported_users})
-    dispatch({ type: "existing_users", payload:response.data[0]?.Existing_users})
+                if (response.data.status === true) {
+                    dispatch({ type: "IMPORT_USER", payload: response.data[1]?.imported_users })
+                    dispatch({ type: "existing_users", payload: response.data[0]?.Existing_users })
 
-}
-nav("/adduser")
-
-
+                }
+                nav("/adduser")
 
 
-                 
+
+
+
 
 
 
@@ -58,9 +58,9 @@ nav("/adduser")
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                         </svg>
                         <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                        <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">xcls and xlc</p>
                     </div>
-                    <input id="dropzone-file"  onChange={handleFileUpload} type="file" className="hidden" />
+                    <input id="dropzone-file" onChange={handleFileUpload} type="file" className="hidden" />
                 </label>
             </div>
 

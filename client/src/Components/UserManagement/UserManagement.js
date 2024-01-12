@@ -25,8 +25,6 @@ export default function UserManagement() {
     const users = useSelector(st => st.UserReducer.users)
     const existing_users = useSelector((state) => state.UserReducer.existing_users);
     const searchQuery = useSelector((state) => state.UserReducer.searchQuery);
-
-
     const filteredUsers = users.filter((user) =>
         user.firstname.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -46,21 +44,6 @@ export default function UserManagement() {
             payload: query,
         });
     };
-
-
-    useEffect(() => {
-
-        // if (errors.ExistingUsers.existing_users.length > 0) {
-        //     setOpen(true)
-        // }
-    }, [])
-
-
-    // console.log(errors.ExistingUsers.existing_users);
-    // console.log(errors.ExistingUsers.message);
-
-
-
     return (
         <div>
 
@@ -180,13 +163,3 @@ export default function UserManagement() {
         </div>
     )
 }
-
-
-
-//lien for table tr
-
-
-export const Tr = styled.tr`
-
-
-`

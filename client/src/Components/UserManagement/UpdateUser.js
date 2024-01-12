@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";

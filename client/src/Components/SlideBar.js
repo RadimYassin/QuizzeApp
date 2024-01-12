@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { MdOutlineManageAccounts, MdOutlineCreateNewFolder } from "react-icons/md";
+import { VscHistory } from "react-icons/vsc";
+
 import { GrDocumentStore } from "react-icons/gr";
 
 import { useSelector } from 'react-redux';
@@ -10,6 +12,9 @@ import { useDispatch } from 'react-redux';
 
 
 export default function SlideBar() {
+
+  const quizzes = useSelector(st => st.AvailableQuizzesReducer.quizzes);
+
    const dispatch = useDispatch()
    const navigate =useNavigate()
 const handelLogOut=()=>{
@@ -26,13 +31,24 @@ const handelLogOut=()=>{
 
         <div className="overflow-y-auto overflow-x-hidden flex-grow">
           <ul className="flex flex-col py-4 space-y-1">
-            <li>
-              <Link to="/" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
-                <span className="inline-flex justify-center items-center ml-4">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                </span>
-                <span className="ml-2 text-sm tracking-wide truncate">Dashboard</span>
-              </Link>
+         {
+           user?.type != "student" &&
+
+           <li>
+           <Link to="/" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
+             <span className="inline-flex justify-center items-center ml-4">
+               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+             </span>
+             <span className="ml-2 text-sm tracking-wide truncate">Dashboard</span>
+           </Link>
+         </li>
+
+         }  
+
+            <li className="px-5">
+              <div className="flex flex-row items-center h-8">
+                <div className="text-sm font-light tracking-wide text-gray-500">messages</div>
+              </div>
             </li>
             <li>
               <Link to="/inbox" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
@@ -98,13 +114,23 @@ const handelLogOut=()=>{
               {
                 user?.type == "student" && (
 
+             <>
                   <Link to="/Quizzes" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
                     <span className="inline-flex justify-center items-center ml-4">
                       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     </span>
                     <span className="ml-2 text-sm tracking-wide truncate">Available Quizze</span>
-                    <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">2</span>
+                    <span className="px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-500 bg-red-50 rounded-full">{quizzes?.length ?    quizzes?.length:""}</span>
                   </Link>
+                    <Link to="/History" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
+                    <span className="inline-flex justify-center items-center ml-4">
+                    <VscHistory className="w-6 h-6" />
+
+                    </span>
+                    <span className="ml-2 text-sm tracking-wide truncate">History Quizzes</span>
+                  </Link>
+
+                  </>
 
                 )
               }
@@ -141,7 +167,7 @@ const handelLogOut=()=>{
                 <span className="ml-2 text-sm tracking-wide truncate">Profile</span>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="#" className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -151,7 +177,7 @@ const handelLogOut=()=>{
                 </span>
                 <span className="ml-2 text-sm tracking-wide truncate">Settings</span>
               </a>
-            </li>
+            </li> */}
             <li>
               <div onClick={handelLogOut} className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-green-500 pr-6">
                 <span className="inline-flex justify-center items-center ml-4">

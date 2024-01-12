@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { client } from "../../outils/axios";
 import { useDispatch } from "react-redux";
@@ -34,9 +33,8 @@ const Navigate=useNavigate()
   
 
         await client.post("/AddQestion", { quiz_id:id, title: data.title, correct_option: data.correct_option, optionA: data.optionA, optionB: data.optionB, optionC: data.optionC, optionD: data.optionD }).then(res => console.log(res.data))
-        
         setShowModal(false)
-        Navigate("createQuizze")
+        window.location.reload();
     
     };
     return (

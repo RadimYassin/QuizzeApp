@@ -6,9 +6,6 @@ const navigation = [
     { name: 'Quizzer', href: '/', current: true },
 ]
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 export default function Navbar() {
 
@@ -26,25 +23,14 @@ export default function Navbar() {
 
                                 </div>
                                 <div className=" sm:ml-6 sm:block">
-                                    { /*<div className="flex space-x-4">
-                   {navigation.map((item) => (
-                      <a
-                      style={{ fontSize:"30px",fontFamily:"Nunito" }}
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? ' text-green-700 ' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-md font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>*/}
+    
                                 </div>
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+
+
+
+                                <span className='mx-4'>{user?.type}</span>
 
 {
     user &&
@@ -55,7 +41,7 @@ export default function Navbar() {
                                         src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt=""
                                     />
-
+                                  
                                 </div>
 }
                                 {/* Profile dropdown */}

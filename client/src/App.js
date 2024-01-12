@@ -1,25 +1,13 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import DashTable from './Components/DashTable';
 import Inbox from './Components/Inbox/Inbox';
 import Users from './Components/Users/Users';
 import Quizzes from './Components/Quizzes/Quizzes';
-// import Register from './Component/Auth/Login';
 import GroupeList from './Components/groupes/GroupeList';
 import NotFound from './pages/NotFound';
-// import UserManagement from './Component/UserManagement/UserManagement';
-// import Quizze from './Containers/Quizzes/Quizze';
-// import CreateSeaction from './Containers/CreateQuizze/CreateSeaction';
-// import Profile from './Containers/Profile/Profile';
 import UpdateUser from './Components/UserManagement/UpdateUser';
 import { useDispatch, useSelector } from 'react-redux';
-// import SlideBar from './Containers/SlideBar';
-// import UploadeExcel from './Component/UserManagement/UploadeExcel';
-// import AddQuestion from './Containers/CreateQuizze/AddQuestion';
-// import QuizzeMangement from './Component/QuizzeMangement/QuizzeMangement';
-// import Navbar from './Containers/Navbar/Navbar';
-// import SlideBar from './Containers/slideBar/SlideBar';
-// import Navbar from './Containers/slideBar/Navbar';
 import Login from './Components/Auth/Login';
 import UserManagement from './Components/UserManagement/UserManagement';
 import Quizze from './Components/Quizzes/Quizze';
@@ -30,21 +18,31 @@ import UploadeExcel from './Components/UserManagement/UploadeExcel';
 import AddQuestion from './Components/CreateQuizze/AddQuestion';
 import QuizzeMangement from './Components/QuizzeMangement/QuizzeMangement';
 import Navbar from './Components/Navbar/Navbar';
+import { client } from './outils/axios';
+import History from './Components/History/History';
 
 
 export default function App() {
 
   const user = useSelector(st => st.AuthReducer.user)
-
+  const Game=useSelector(st=>st.GameReducer.Game)
   const dispatch = useDispatch()
   useEffect(() => {
     const user = localStorage.getItem("userInfo")
-
-
     if (user) {
       dispatch({ type: "LOGIN", payload: JSON.parse(user) })
     }
   }, []);
+
+
+  if (!user) {
+    return <BrowserRouter>
+    <Routes>
+    <Route path="/login" index element={<Login />} />
+
+    </Routes>
+    </BrowserRouter>
+  }
   return (
     <BrowserRouter>
       <>
@@ -52,9 +50,11 @@ export default function App() {
         <div className="min-h-screen flex">
 
           <nav className=" flex-none shadow-md">
+            
             {
-              user && <SlideBar />
+              Game!="Started" &&    <SlideBar />
             }
+            
 
           </nav>
 
@@ -62,7 +62,6 @@ export default function App() {
 
             <Routes>
 
-              <Route path="/login" index element={<Login />} />
               <Route path="/" index element={
 
                 <DashTable />}
@@ -79,6 +78,8 @@ export default function App() {
               {/**students dash */}
 
               <Route path="/Quizzes" element={<Quizzes />} />
+              <Route path="/History" element={<History/>} />
+
               <Route path="/Qz/:id" element={<Quizze />} />
 
 

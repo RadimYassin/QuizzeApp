@@ -20,7 +20,7 @@ function CreateSeaction() {
 
 
 
-    const filteredUsers = state.filter((q) =>
+    const filteredQuizzes = state.filter((q) =>
         q.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
@@ -35,10 +35,6 @@ function CreateSeaction() {
         }
 
     }
-
-
-
-
 
     useEffect(() => {
 
@@ -63,70 +59,72 @@ function CreateSeaction() {
                             <h3 class="text-2xl text-green-600 font-bold  ">Quizess</h3>
                         </div>
                         <div class="">
-                            {
-                                filteredUsers.length > 0 ? <SearchQuiz /> : < p class="text-gray-500">No quizzes yet,Let's write a new Quiz! 🎉 </p>
-                            }
+
+                            <SearchQuiz />
+
                         </div>
                     </div>
 
 
                     {
-                        filteredUsers.length > 0 &&
+                        filteredQuizzes.length > 0 ?
 
 
-                        <div class="block overflow-x-auto shadow-md sm:rounded-lg">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-                                <thead>
-                                    <tr>
-                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">title</th>
-                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">date</th>
-                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">time</th>
-                                        <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">action</th>
+                            <div class="block overflow-x-auto shadow-md sm:rounded-lg">
+                                <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">title</th>
+                                            <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">date</th>
+                                            <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">time</th>
+                                            <th class="px-4 bg-gray-100  text-black  align-middle border border-solid border-gray-200  py-3 text-base uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">action</th>
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        filteredUsers.map(item => (
-                                            <tr key={item.id} class="" >
-                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4 text-left">{item.title}</td>
-
-
-                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.date}</td>
-                                                <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.time}min</td>
-
-                                                <td class=" border-t-0 px-4 w-1/5 border-l-0 border-r-0 text-sm  p-4">
-                                                    <div class="groupe">
-
-                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                            <LiaEditSolid class="w-7 h-7 text-blue-600 " />
-
-                                                        </button>
-                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                            <DeleteQuizze id={item.id} />
-                                                        </button>
-                                                        <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
-                                                            <Link to={"/addQs/" + item.id}>
-
-                                                                <CgFolderAdd class="w-7 h-7 text-green-600 " />
-
-                                                            </Link>
-
-                                                        </button>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            filteredQuizzes.map(item => (
+                                                <tr key={item.id} class="" >
+                                                    <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4 text-left">{item.title}</td>
 
 
-                                                    </div>
-                                                </td>
+                                                    <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.date}</td>
+                                                    <td class="border-t-0 px-4 align-middle border-l-0 border-r-0 text-sm  p-4">{item.time}min</td>
 
-                                            </tr>
-                                        ))
-                                    }
+                                                    <td class=" border-t-0 px-4 w-1/5 border-l-0 border-r-0 text-sm  p-4">
+                                                        <div class="groupe">
+
+                                                            <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                                <LiaEditSolid class="w-7 h-7 text-blue-600 " />
+
+                                                            </button>
+                                                            <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                                <DeleteQuizze id={item.id} />
+                                                            </button>
+                                                            <button type="button" class="bg-transparent px-4 py-2 text-sm font-medium text-gray-900  ">
+                                                                <Link to={"/addQs/" + item.id}>
+
+                                                                    <CgFolderAdd class="w-7 h-7 text-green-600 " />
+
+                                                                </Link>
+
+                                                            </button>
+
+
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                            ))
+
+                                        }
 
 
 
-                                </tbody>
-                            </table>
-                        </div>
+                                    </tbody>
+                                </table>
+                            </div>
+                            : < p class="text-gray-500 text-center p-4">No  Quiz Yet! 🎉 </p>
 
 
 

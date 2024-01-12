@@ -1,19 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { client } from '../../outils/axios';
 import { useCookies } from 'react-cookie';
 import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../Navbar/Navbar';
 
 const SignupSchema = Yup.object().shape({
 
   email: Yup.string()
     .email()
     .required('Required')
-    .matches(/@emsi\.ma$/, {
-      message: 'Email must end with @emsi.ma',
-    }), password: Yup.string()
+    .matches(/@emsi-edu\.ma$/, {
+      message: 'Email must end with @emsi-edu.ma',
+    })
+    , password: Yup.string()
       .min(5, 'Too Short!')
       .max(20, 'Too Long!')
       .required('Required')
@@ -21,8 +23,10 @@ const SignupSchema = Yup.object().shape({
 
 export default function Login() {
   const navigate = useNavigate()
-  const [_,setCookies]=useCookies(["access_token"])
+  const [_, setCookies] = useCookies(["access_token"])
   const dispatch = useDispatch()
+  const [error, setError] = useState("")
+  const [isError, setIsError] = useState(false)
 
   const HandelSubmit = async (data) => {
 
@@ -39,19 +43,28 @@ export default function Login() {
           console.log(response.data.UserId);
           console.log(response.data.token);
 
-          if(response.data.status ==true){
-            window.localStorage.setItem("userInfo",JSON.stringify({id:response.data.userId,type:response.data.type}))
-            dispatch({type:"LOGIN",payload:{id:response.data.userId,type:response.data.type}})
-            setCookies("access_token",response.data.token)
-            navigate("/")         
+          if (response.data.status == true) {
+            window.localStorage.setItem("userInfo", JSON.stringify({ id: response.data.userId, type: response.data.type }))
+            dispatch({ type: "LOGIN", payload: { id: response.data.userId, type: response.data.type } })
+            setCookies("access_token", response.data.token)
+
+            if (response.data.type=="student") {
+              navigate("/Quizzes")
+
+            }else{
+              navigate("/")
+
+
+            }
           }
         });
-     
+
     } catch (error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log(error.response.data);
+        if (error.response.data.message) {
+          setError(error.response.data.message);
+          setIsError(true)
+        }
         console.log(error.response.status);
         console.log(error.response.headers);
       } else if (error.request) {
@@ -69,7 +82,7 @@ export default function Login() {
   return (
     <div style={{ backgroundColor: "rgb(237, 241, 247)" }} className='h-auto lg:h-screen'>
 
-
+      <Navbar />
       <div class=" relative   flex items-center  justify-around overflow-hidden lg:my-28">
 
         <div style={{ width: "100%" }} class="relative  h-full lg:mx-20    md:pb-10 sm:max-w-xl md:max-w-full ">
@@ -98,6 +111,17 @@ export default function Login() {
               <div class=" mx-auto overflow-hidden rounded-[.6rem] w-9/12 py-1 shadow-md bg-white">
                 <div class="flex min-h-full flex-col  px-6 py-12 lg:px-8">
                   <div class="flex   justify-between gap-3 mb-5  sm:w-full sm:max-w-sm">
+
+                    {
+                      isError == true && (
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                          {error}
+                        </div>
+                      )
+                    }
+
+
+
                   </div>
 
                   <Formik

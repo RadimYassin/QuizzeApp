@@ -12,8 +12,8 @@ export default function AddUser() {
     email: Yup.string()
       .email()
       .required('Required')
-      .matches(/@emsi\.ma$/, {
-        message: 'Email must end with @emsi.ma',
+      .matches(/@emsi-edu\.ma$/, {
+        message: 'Email must end with @emsi-edu.ma',
       }),
     password: Yup.string()
       .min(5, 'Too Short!')
